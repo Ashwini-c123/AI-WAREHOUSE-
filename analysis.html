@@ -1,0 +1,216 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Analysis | Warehouse AI</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+body{font-family:Inter,sans-serif;background:#080f25;color:#f8fafc}
+.glass{background:rgba(19,34,67,.78);border:1px solid rgba(148,163,184,.15);backdrop-filter:blur(18px)}
+.gradient{background:linear-gradient(135deg,#2563eb,#6366f1,#38bdf8)}
+.nav{display:flex;align-items:center;gap:12px;padding:13px 15px;border-radius:12px;color:#a8b7d2}
+.nav:hover,.nav.active{background:linear-gradient(100deg,#2563eb55,#6366f122);color:white}
+@keyframes scan{0%{transform:translateY(0)}100%{transform:translateY(125px)}}
+.scanline{animation:scan 2s ease-in-out infinite alternate}
+@keyframes glow{0%,100%{box-shadow:0 0 8px #3b82f655}50%{box-shadow:0 0 24px #3b82f6aa}}
+.glow{animation:glow 2s infinite}
+</style>
+</head>
+<body>
+<div class="min-h-screen md:flex">
+<aside class="md:w-64 bg-[#0b1530] border-r border-white/10 p-5 md:fixed md:inset-y-0">
+<a href="index.html" class="flex items-center gap-3 mb-10">
+<div class="gradient w-12 h-12 rounded-2xl flex items-center justify-center"><i class="fa-solid fa-warehouse text-xl"></i></div>
+<div><h1 class="font-extrabold text-lg">Warehouse AI</h1><p class="text-xs text-blue-300">Smart Inventory System</p></div>
+</a>
+<p class="text-xs text-slate-500 uppercase tracking-widest mb-3">Workspace</p>
+<nav class="space-y-2">
+<a class="nav" href="index.html"><i class="fa-solid fa-house w-5"></i> Dashboard</a>
+<a class="nav" href="upload.html"><i class="fa-solid fa-cloud-arrow-up w-5"></i> Upload Images</a>
+<a class="nav active" href="analysis.html"><i class="fa-solid fa-microchip w-5"></i> AI Analysis</a>
+</nav>
+<div class="glass rounded-2xl p-4 mt-10"><span class="text-emerald-400 text-sm"><i class="fa-solid fa-circle mr-2 text-xs"></i>AI WORKSPACE</span><p class="text-xs text-slate-400 mt-3 leading-5">Analysis status updates after the backend responds.</p></div>
+</aside>
+
+<main class="flex-1 md:ml-64 min-w-0">
+<header class="px-5 md:px-10 py-6 border-b border-white/10 flex justify-between items-center">
+<div><p class="text-xs text-blue-300">WORKSPACE / AI ANALYSIS</p><h2 class="text-2xl font-bold mt-1">AI Image Analysis</h2></div>
+<a href="upload.html" class="border border-white/10 rounded-xl px-4 py-3 text-sm hover:bg-white/5"><i class="fa-solid fa-arrow-left mr-2"></i>Upload</a>
+</header>
+
+<div class="p-5 md:p-10 max-w-7xl mx-auto">
+<div class="mb-8">
+<span id="statusBadge" class="inline-flex items-center gap-2 bg-blue-500/15 text-blue-300 border border-blue-400/20 px-3 py-2 rounded-full text-xs font-bold"><i class="fa-solid fa-circle-notch"></i> READY TO START</span>
+<h1 class="text-3xl md:text-4xl font-extrabold mt-5">Let AI Do the Counting.</h1>
+<p class="text-slate-400 mt-3 max-w-2xl leading-7">Process your warehouse photos with your trained YOLO model and view object detection results.</p>
+</div>
+
+<div class="grid grid-cols-1 xl:grid-cols-3 gap-6">
+<div class="xl:col-span-2 space-y-6">
+
+<section class="glass rounded-3xl p-5 md:p-7">
+<div class="flex justify-between items-center gap-4 mb-5"><div><h3 class="text-lg font-bold">Image Preview</h3><p class="text-sm text-slate-400 mt-1">Your selected warehouse images</p></div><span id="imageCount" class="text-xs bg-blue-500/15 text-blue-300 rounded-lg px-3 py-2">0 images</span></div>
+<div id="imageGrid" class="grid grid-cols-2 sm:grid-cols-3 gap-4">
+<div class="col-span-full py-10 text-center text-slate-500"><i class="fa-regular fa-images text-4xl"></i><p class="mt-3 text-sm">No uploaded images found.</p><a href="upload.html" class="inline-block mt-3 text-blue-400 text-sm font-bold">Upload images</a></div>
+</div>
+</section>
+
+<section class="glass rounded-3xl p-5 md:p-7">
+<div class="flex justify-between items-center gap-4"><div><h3 class="text-lg font-bold">Processing Status</h3><p id="progressText" class="text-sm text-slate-400 mt-1">Ready to start analysis</p></div><span id="percent" class="text-3xl font-extrabold text-blue-400">0%</span></div>
+<div class="w-full h-3 bg-slate-800 rounded-full overflow-hidden mt-6"><div id="bar" class="gradient h-full rounded-full transition-all duration-500" style="width:0%"></div></div>
+<div class="grid sm:grid-cols-3 gap-4 mt-6">
+<div class="bg-white/[.03] border border-white/5 rounded-xl p-4"><p class="text-xs text-slate-400">Images Processed</p><p id="processed" class="text-2xl font-extrabold mt-2">0</p></div>
+<div class="bg-white/[.03] border border-white/5 rounded-xl p-4"><p class="text-xs text-slate-400">Images Remaining</p><p id="remaining" class="text-2xl font-extrabold mt-2">0</p></div>
+<div class="bg-white/[.03] border border-white/5 rounded-xl p-4"><p class="text-xs text-slate-400">Current Status</p><p id="currentStatus" class="text-lg font-bold mt-2">Waiting</p></div>
+</div>
+</section>
+
+<section class="glass rounded-3xl p-5 md:p-7">
+<h3 class="font-bold text-lg mb-5">Analysis Activity</h3>
+<div id="activity" class="space-y-4"><div class="flex gap-3"><span class="w-9 h-9 rounded-xl bg-blue-500/15 text-blue-300 flex items-center justify-center"><i class="fa-solid fa-clock"></i></span><div><p class="text-sm font-semibold">Waiting for analysis</p><p class="text-xs text-slate-500 mt-1">Upload images and start the process.</p></div></div></div>
+</section>
+</div>
+
+<aside class="space-y-6">
+<section class="glass rounded-3xl p-6">
+<div class="flex items-center gap-3"><div class="gradient w-12 h-12 rounded-xl flex items-center justify-center"><i class="fa-solid fa-brain text-xl"></i></div><div><h3 class="font-bold">YOLO AI Model</h3><p class="text-xs text-blue-300 mt-1">Computer Vision</p></div></div>
+<div class="space-y-4 mt-6 text-sm">
+<div class="flex justify-between gap-3"><span class="text-slate-400">Detection type</span><span class="font-semibold">Object Detection</span></div>
+<div class="flex justify-between gap-3"><span class="text-slate-400">Input format</span><span class="font-semibold">Images</span></div>
+<div class="flex justify-between gap-3"><span class="text-slate-400">Model weights</span><span class="font-semibold">best.pt</span></div>
+<div class="flex justify-between gap-3"><span class="text-slate-400">Backend</span><span id="backendStatus" class="text-amber-300 font-semibold">Not checked</span></div>
+</div>
+</section>
+
+<section class="glass rounded-3xl p-6">
+<h3 class="font-bold">Detection Summary</h3>
+<p class="text-xs text-slate-400 mt-1">Updated from the backend response</p>
+<div class="mt-5 bg-blue-500/10 border border-blue-400/10 rounded-2xl p-4"><p class="text-sm text-slate-400">Objects detected</p><p id="objects" class="text-3xl font-extrabold mt-2">--</p></div>
+<div class="mt-3 bg-violet-500/10 border border-violet-400/10 rounded-2xl p-4"><p class="text-sm text-slate-400">Unique objects</p><p id="unique" class="text-3xl font-extrabold mt-2">--</p><p class="text-xs text-slate-500 mt-2">Requires cross-view matching</p></div>
+<div id="classes" class="text-sm text-slate-400 mt-4">No class counts available.</div>
+</section>
+
+<section class="glass rounded-3xl p-6">
+<h3 class="font-bold mb-4">Actions</h3>
+<button id="startBtn" class="gradient glow w-full rounded-xl py-4 font-bold" onclick="startAnalysis()"><i class="fa-solid fa-play mr-2"></i>Start AI Analysis</button>
+<button id="resultsBtn" disabled onclick="viewResults()" class="w-full rounded-xl py-4 mt-3 border border-white/10 text-slate-500 font-bold disabled:cursor-not-allowed">View Results <i class="fa-solid fa-arrow-right ml-2"></i></button>
+<a href="upload.html" class="block text-center text-sm text-slate-400 hover:text-white mt-5">Change uploaded images</a>
+</section>
+</aside>
+</div>
+<footer class="text-center text-xs text-slate-600 py-8">Warehouse AI · Intelligent Inventory Detection System</footer>
+</div>
+</main>
+</div>
+
+<script>
+const API_URL="http://127.0.0.1:8000/analyze";
+let files=[],done=false;
+
+function dbFiles(){
+ return new Promise((resolve,reject)=>{
+  const req=indexedDB.open("WarehouseAI",1);
+  req.onupgradeneeded=()=>{if(!req.result.objectStoreNames.contains("uploads"))req.result.createObjectStore("uploads");};
+  req.onsuccess=()=>{
+   const db=req.result,tx=db.transaction("uploads","readonly"),get=tx.objectStore("uploads").get("selectedFiles");
+   get.onsuccess=()=>{resolve(get.result||[]);db.close();};
+   get.onerror=()=>{db.close();reject(get.error);};
+  };
+  req.onerror=()=>reject(req.error);
+ });
+}
+function log(title,detail,ok=false){
+ const row=document.createElement("div");row.className="flex gap-3";
+ const icon=document.createElement("span");icon.className="w-9 h-9 rounded-xl flex items-center justify-center "+(ok?"bg-emerald-500/15 text-emerald-300":"bg-blue-500/15 text-blue-300");icon.innerHTML=ok?'<i class="fa-solid fa-check"></i>':'<i class="fa-solid fa-circle-info"></i>';
+ const box=document.createElement("div"),h=document.createElement("p"),p=document.createElement("p");
+ h.className="text-sm font-semibold";h.textContent=title;
+ p.className="text-xs text-slate-500 mt-1";p.textContent=detail;
+ box.append(h,p);row.append(icon,box);document.getElementById("activity").prepend(row);
+}
+function progress(n,text){
+ document.getElementById("bar").style.width=n+"%";
+ document.getElementById("percent").textContent=n+"%";
+ document.getElementById("progressText").textContent=text;
+}
+async function loadImages(){
+ try{files=await dbFiles();}catch(e){console.error(e);files=[];}
+ const grid=document.getElementById("imageGrid");
+ document.getElementById("imageCount").textContent=files.length+" images";
+ document.getElementById("remaining").textContent=files.length;
+ if(!files.length){grid.innerHTML='<div class="col-span-full py-10 text-center text-slate-500"><i class="fa-regular fa-images text-4xl"></i><p class="mt-3 text-sm">No uploaded images found.</p><a href="upload.html" class="inline-block mt-3 text-blue-400 text-sm font-bold">Upload images</a></div>';return;}
+ grid.innerHTML="";
+ files.forEach(file=>{
+  const card=document.createElement("div");card.className="overflow-hidden rounded-xl border border-white/10 bg-[#101b35]";
+  const img=document.createElement("img");img.src=URL.createObjectURL(file);img.alt=file.name;img.className="w-full h-32 object-cover";
+  const name=document.createElement("p");name.className="text-xs font-semibold p-3 truncate";name.textContent=file.name;
+  card.append(img,name);grid.append(card);
+ });
+ log("Images loaded",files.length+" image(s) ready for processing.");
+}
+async function startAnalysis(){
+ if(!files.length){alert("No images found. Please upload images first.");return;}
+ const btn=document.getElementById("startBtn");
+ btn.disabled=true;btn.innerHTML='<i class="fa-solid fa-spinner fa-spin mr-2"></i>Processing...';
+ document.getElementById("currentStatus").textContent="Running";
+ document.getElementById("statusBadge").innerHTML='<i class="fa-solid fa-circle-notch fa-spin"></i> ANALYZING';
+ progress(15,"Sending images to the AI backend...");
+ log("Analysis started","Submitting images to FastAPI.");
+ try{
+  const form=new FormData();
+  files.forEach(file=>form.append("files",file));
+  progress(35,"Running YOLO object detection...");
+  const response=await fetch(API_URL,{method:"POST",body:form});
+  if(!response.ok)throw new Error("HTTP "+response.status);
+  const data=await response.json();
+
+  document.getElementById("backendStatus").textContent="Connected";
+  document.getElementById("backendStatus").className="text-emerald-300 font-semibold";
+  document.getElementById("objects").textContent=data.total_objects??"--";
+  document.getElementById("unique").textContent=data.unique_objects??"--";
+  const classes=document.getElementById("classes");classes.innerHTML="";
+  Object.entries(data.class_counts||{}).forEach(([label,count])=>{
+   const row=document.createElement("div");row.className="flex justify-between border-b border-white/10 py-2";
+   const name=document.createElement("span");name.textContent=label;
+   const value=document.createElement("span");value.className="font-bold text-white";value.textContent=count;
+   row.append(name,value);classes.append(row);
+  });
+  if(!Object.keys(data.class_counts||{}).length)classes.textContent="No class counts returned.";
+  progress(100,"AI analysis completed successfully.");
+  document.getElementById("processed").textContent=files.length;
+  document.getElementById("remaining").textContent=0;
+  document.getElementById("currentStatus").textContent="Completed";
+  document.getElementById("statusBadge").innerHTML='<i class="fa-solid fa-circle-check"></i> COMPLETED';
+  document.getElementById("statusBadge").className="inline-flex items-center gap-2 bg-emerald-500/15 text-emerald-300 border border-emerald-400/20 px-3 py-2 rounded-full text-xs font-bold";
+  sessionStorage.setItem("warehouseAnalysisResults",JSON.stringify(data));
+  const history=JSON.parse(localStorage.getItem("warehouseHistory")||"[]");
+  history.unshift({date:new Date().toLocaleString(),imageCount:files.length,totalObjects:data.total_objects||0,uniqueObjects:data.unique_objects||0});
+  localStorage.setItem("warehouseHistory",JSON.stringify(history.slice(0,50)));
+  done=true;
+  document.getElementById("resultsBtn").disabled=false;
+  document.getElementById("resultsBtn").className="gradient w-full rounded-xl py-4 mt-3 font-bold";
+  log("Analysis completed","Backend returned detection results.",true);
+ }catch(e){
+  console.error(e);
+  progress(0,"Could not connect to the AI backend.");
+  document.getElementById("currentStatus").textContent="Failed";
+  document.getElementById("backendStatus").textContent="Offline";
+  document.getElementById("backendStatus").className="text-rose-300 font-semibold";
+  document.getElementById("statusBadge").innerHTML='<i class="fa-solid fa-triangle-exclamation"></i> CONNECTION ERROR';
+  document.getElementById("statusBadge").className="inline-flex items-center gap-2 bg-rose-500/15 text-rose-300 border border-rose-400/20 px-3 py-2 rounded-full text-xs font-bold";
+  log("Connection failed","Start FastAPI and verify the /analyze endpoint and CORS settings.");
+  alert("Backend connection failed. Start FastAPI at "+API_URL+" and check the /analyze endpoint.");
+ }finally{btn.disabled=false;btn.innerHTML='<i class="fa-solid fa-rotate-right mr-2"></i>Run Analysis Again';}
+}
+function viewResults(){
+ if(!done)return;
+ // Create results.html before using this navigation.
+ window.location.href="results.html";
+}
+loadImages();
+</script>
+</body>
+</html>

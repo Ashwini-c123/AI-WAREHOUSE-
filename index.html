@@ -1,0 +1,300 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Warehouse AI | Dashboard</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <style>
+    body{font-family:Inter,sans-serif;background:#080f25;color:#f8fafc}
+    .glass{background:rgba(19,34,67,.78);border:1px solid rgba(148,163,184,.15);backdrop-filter:blur(18px)}
+    .gradient{background:linear-gradient(135deg,#2563eb,#6366f1,#38bdf8)}
+    .nav{display:flex;align-items:center;gap:12px;padding:13px 15px;border-radius:12px;color:#a8b7d2;transition:.2s}
+    .nav:hover,.nav.active{background:linear-gradient(100deg,#2563eb55,#6366f122);color:white}
+  </style>
+</head>
+
+<body>
+<div class="min-h-screen md:flex">
+
+  <!-- SIDEBAR -->
+  <aside class="md:w-64 bg-[#0b1530] border-r border-white/10 p-5 md:fixed md:inset-y-0 md:overflow-y-auto">
+
+    <a href="index.html" class="flex items-center gap-3 mb-10">
+      <div class="gradient w-12 h-12 rounded-2xl flex items-center justify-center">
+        <i class="fa-solid fa-warehouse text-xl"></i>
+      </div>
+      <div>
+        <h1 class="font-extrabold text-lg">Warehouse AI</h1>
+        <p class="text-xs text-blue-300">Smart Inventory System</p>
+      </div>
+    </a>
+
+    <p class="text-xs text-slate-500 uppercase tracking-widest mb-3">Workspace</p>
+
+    <nav class="space-y-2">
+      <a class="nav active" href="index.html">
+        <i class="fa-solid fa-house w-5"></i> Dashboard
+      </a>
+
+      <a class="nav" href="upload.html">
+        <i class="fa-solid fa-cloud-arrow-up w-5"></i> Upload Images
+      </a>
+
+      <a class="nav" href="analysis.html">
+        <i class="fa-solid fa-microchip w-5"></i> AI Analysis
+      </a>
+
+      <a class="nav" href="index.html#features">
+        <i class="fa-solid fa-cubes w-5"></i> Features
+      </a>
+
+      <a class="nav" href="history.html">
+        <i class="fa-solid fa-clock-rotate-left w-5"></i> Scan History
+      </a>
+
+      <a class="nav" href="settings.html">
+        <i class="fa-solid fa-gear w-5"></i> Settings
+      </a>
+    </nav>
+
+    <!-- ACCOUNT NAVIGATION -->
+    <p class="text-xs text-slate-500 uppercase tracking-widest mt-8 mb-3">
+      Account
+    </p>
+
+    <nav class="space-y-2">
+      <a class="nav" href="login.html">
+        <i class="fa-solid fa-right-to-bracket w-5"></i> Login
+      </a>
+
+      <a class="nav" href="register.html">
+        <i class="fa-solid fa-user-plus w-5"></i> Register
+      </a>
+    </nav>
+
+    <div class="glass rounded-2xl p-4 mt-8">
+      <div class="flex items-center gap-2 text-sm font-semibold">
+        <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+        AI Workspace
+      </div>
+      <p class="text-xs text-slate-400 mt-2 leading-5">
+        Upload warehouse photos to start your inventory analysis.
+      </p>
+    </div>
+
+  </aside>
+
+  <!-- MAIN CONTENT -->
+  <main class="flex-1 md:ml-64 min-w-0">
+
+    <!-- HEADER -->
+    <header class="px-5 md:px-10 py-6 border-b border-white/10 flex flex-wrap justify-between items-center gap-4">
+
+      <div>
+        <p class="text-xs text-blue-300">WORKSPACE / OVERVIEW</p>
+        <h2 class="text-2xl font-bold mt-1">Dashboard</h2>
+      </div>
+
+      <div class="flex flex-wrap items-center gap-3">
+
+        <a href="login.html"
+           class="border border-white/15 hover:bg-white/5 px-4 py-3 rounded-xl text-sm font-semibold">
+          <i class="fa-solid fa-right-to-bracket mr-2"></i>Login
+        </a>
+
+        <a href="register.html"
+           class="gradient px-4 py-3 rounded-xl text-sm font-bold">
+          <i class="fa-solid fa-user-plus mr-2"></i>Create Account
+        </a>
+
+        <a href="upload.html"
+           class="bg-white text-blue-700 hover:bg-blue-50 px-4 py-3 rounded-xl text-sm font-bold">
+          <i class="fa-solid fa-plus mr-2"></i>New Analysis
+        </a>
+
+      </div>
+    </header>
+
+    <div class="p-5 md:p-10 max-w-7xl mx-auto">
+
+      <!-- HERO SECTION -->
+      <section class="relative overflow-hidden rounded-3xl p-7 md:p-11 mb-8 gradient">
+
+        <div class="absolute -right-12 -top-16 w-72 h-72 rounded-full border-[35px] border-white/10"></div>
+        <div class="absolute right-24 bottom-[-100px] w-64 h-64 rounded-full bg-cyan-300/20 blur-3xl"></div>
+
+        <div class="relative max-w-2xl">
+
+          <span class="inline-flex items-center gap-2 bg-white/15 border border-white/20 rounded-full px-3 py-2 text-xs font-semibold">
+            <i class="fa-solid fa-wand-magic-sparkles"></i>
+            AI-POWERED INVENTORY
+          </span>
+
+          <h1 class="text-3xl md:text-5xl font-extrabold leading-tight mt-5">
+            Smarter Warehouses.<br>Accurate Inventory.
+          </h1>
+
+          <p class="text-blue-50/90 mt-4 leading-7 max-w-xl">
+            Detect warehouse objects, analyze inventory images and organize your stock using computer vision.
+          </p>
+
+          <div class="flex flex-wrap gap-3 mt-7">
+
+            <a href="upload.html"
+               class="inline-flex items-center gap-3 bg-white text-blue-700 px-6 py-3.5 rounded-xl font-bold hover:bg-blue-50 transition">
+              Start Analyzing <i class="fa-solid fa-arrow-right"></i>
+            </a>
+
+            <a href="register.html"
+               class="inline-flex items-center gap-3 bg-[#172554]/50 border border-white/25 text-white px-6 py-3.5 rounded-xl font-bold hover:bg-[#172554]/80 transition">
+              Get Started <i class="fa-solid fa-user-plus"></i>
+            </a>
+
+          </div>
+        </div>
+      </section>
+
+      <!-- OVERVIEW -->
+      <div class="flex flex-wrap items-center justify-between gap-3 mb-5">
+        <div>
+          <h2 class="text-xl font-bold">Workspace Overview</h2>
+          <p class="text-sm text-slate-400 mt-1">Your inventory analysis at a glance</p>
+        </div>
+
+        <span class="text-xs text-slate-400 border border-white/10 rounded-lg px-3 py-2">
+          Live data after backend connection
+        </span>
+      </div>
+
+      <!-- STATISTICS -->
+      <section class="grid sm:grid-cols-2 xl:grid-cols-4 gap-4 mb-8">
+
+        <div class="glass p-5 rounded-2xl">
+          <div class="flex justify-between">
+            <span class="text-sm text-slate-400">Total Analyses</span>
+            <span class="w-10 h-10 rounded-xl bg-blue-500/15 text-blue-400 flex items-center justify-center">
+              <i class="fa-solid fa-chart-line"></i>
+            </span>
+          </div>
+          <p id="analyses" class="text-3xl font-extrabold mt-5">0</p>
+          <p class="text-xs text-slate-500 mt-2">Completed sessions</p>
+        </div>
+
+        <div class="glass p-5 rounded-2xl">
+          <div class="flex justify-between">
+            <span class="text-sm text-slate-400">Images Uploaded</span>
+            <span class="w-10 h-10 rounded-xl bg-cyan-500/15 text-cyan-300 flex items-center justify-center">
+              <i class="fa-regular fa-images"></i>
+            </span>
+          </div>
+          <p id="images" class="text-3xl font-extrabold mt-5">0</p>
+          <p class="text-xs text-slate-500 mt-2">Warehouse photos</p>
+        </div>
+
+        <div class="glass p-5 rounded-2xl">
+          <div class="flex justify-between">
+            <span class="text-sm text-slate-400">Objects Detected</span>
+            <span class="w-10 h-10 rounded-xl bg-violet-500/15 text-violet-300 flex items-center justify-center">
+              <i class="fa-solid fa-cubes"></i>
+            </span>
+          </div>
+          <p id="objects" class="text-3xl font-extrabold mt-5">0</p>
+          <p class="text-xs text-slate-500 mt-2">Model detections</p>
+        </div>
+
+        <div class="glass p-5 rounded-2xl">
+          <div class="flex justify-between">
+            <span class="text-sm text-slate-400">Unique Objects</span>
+            <span class="w-10 h-10 rounded-xl bg-emerald-500/15 text-emerald-300 flex items-center justify-center">
+              <i class="fa-solid fa-boxes-stacked"></i>
+            </span>
+          </div>
+          <p id="unique" class="text-3xl font-extrabold mt-5">0</p>
+          <p class="text-xs text-slate-500 mt-2">After cross-view matching</p>
+        </div>
+
+      </section>
+
+      <!-- FEATURES -->
+      <section id="features" class="grid lg:grid-cols-3 gap-5 mb-8">
+
+        <div class="glass rounded-2xl p-6">
+          <div class="gradient w-12 h-12 rounded-xl flex items-center justify-center">
+            <i class="fa-solid fa-eye text-xl"></i>
+          </div>
+          <h3 class="font-bold text-lg mt-5">Object Detection</h3>
+          <p class="text-sm text-slate-400 leading-6 mt-2">
+            Identify trained object categories in warehouse photos with bounding boxes.
+          </p>
+        </div>
+
+        <div class="glass rounded-2xl p-6">
+          <div class="gradient w-12 h-12 rounded-xl flex items-center justify-center">
+            <i class="fa-solid fa-layer-group text-xl"></i>
+          </div>
+          <h3 class="font-bold text-lg mt-5">Multi-View Analysis</h3>
+          <p class="text-sm text-slate-400 leading-6 mt-2">
+            Analyze multiple views of the same warehouse and prepare inventory summaries.
+          </p>
+        </div>
+
+        <div class="glass rounded-2xl p-6">
+          <div class="gradient w-12 h-12 rounded-xl flex items-center justify-center">
+            <i class="fa-solid fa-chart-pie text-xl"></i>
+          </div>
+          <h3 class="font-bold text-lg mt-5">Smart Reporting</h3>
+          <p class="text-sm text-slate-400 leading-6 mt-2">
+            Review object counts and confidence scores returned by your AI model.
+          </p>
+        </div>
+
+      </section>
+
+      <!-- CALL TO ACTION -->
+      <section class="glass rounded-2xl p-6 flex flex-col md:flex-row md:items-center justify-between gap-5">
+        <div>
+          <h3 class="text-lg font-bold">Ready to analyze your warehouse?</h3>
+          <p class="text-sm text-slate-400 mt-1">Upload 4–6 photos to begin your workflow.</p>
+        </div>
+
+        <a href="upload.html" class="gradient rounded-xl px-6 py-3 font-bold text-center">
+          Upload Warehouse Images <i class="fa-solid fa-arrow-right ml-2"></i>
+        </a>
+      </section>
+
+      <footer class="text-center text-xs text-slate-600 py-8">
+        Warehouse AI · Intelligent Inventory Detection System
+      </footer>
+
+    </div>
+  </main>
+</div>
+
+<script>
+  try {
+    const history = JSON.parse(localStorage.getItem("warehouseHistory") || "[]");
+
+    document.getElementById("analyses").textContent = history.length;
+
+    document.getElementById("images").textContent =
+      history.reduce((sum, item) => sum + (Number(item.imageCount) || 0), 0);
+
+    document.getElementById("objects").textContent =
+      history.reduce((sum, item) => sum + (Number(item.totalObjects) || 0), 0);
+
+    document.getElementById("unique").textContent =
+      history.reduce((sum, item) => sum + (Number(item.uniqueObjects) || 0), 0);
+
+  } catch (error) {
+    console.log("No saved warehouse history found.");
+  }
+</script>
+
+</body>
+</html>

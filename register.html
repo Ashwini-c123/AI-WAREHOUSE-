@@ -1,0 +1,347 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create Account | Warehouse AI</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+  <style>
+    * { font-family: Inter, sans-serif; }
+
+    body {
+      min-height: 100vh;
+      background:
+        linear-gradient(110deg, rgba(4,12,29,.94), rgba(9,24,54,.80), rgba(15,23,42,.76)),
+        url("https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=2000&q=85")
+        center/cover fixed no-repeat;
+    }
+
+    .glass {
+      background: rgba(10,20,43,.86);
+      border: 1px solid rgba(148,163,184,.25);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      box-shadow: 0 25px 80px rgba(0,0,0,.35);
+    }
+
+    .gradient-text {
+      background: linear-gradient(90deg,#60a5fa,#a78bfa);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .field {
+      width: 100%;
+      background: rgba(15,27,52,.85);
+      border: 1px solid #334155;
+      border-radius: 12px;
+      padding: 13px 43px;
+      color: white;
+      outline: none;
+      transition: .2s;
+    }
+
+    .field:focus {
+      border-color: #60a5fa;
+      box-shadow: 0 0 0 3px rgba(59,130,246,.13);
+    }
+
+    .field::placeholder { color: #94a3b8; }
+
+    .primary-btn {
+      background: linear-gradient(100deg,#2563eb,#7c3aed);
+      box-shadow: 0 8px 25px rgba(37,99,235,.23);
+      transition: .2s;
+    }
+
+    .primary-btn:hover {
+      transform: translateY(-1px);
+      filter: brightness(1.1);
+    }
+
+    .auth-icon {
+      position: absolute;
+      left: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #93a4c4;
+    }
+
+    .strength-bar {
+      height: 4px;
+      border-radius: 10px;
+      background: #334155;
+      overflow: hidden;
+    }
+
+    .strength-fill {
+      height: 100%;
+      width: 0;
+      transition: .2s;
+      background: #ef4444;
+    }
+  </style>
+</head>
+
+<body class="text-white flex flex-col">
+
+  <header class="flex items-center justify-between px-5 md:px-12 py-5">
+    <a href="login.html" class="flex items-center gap-3">
+      <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-blue-500 to-violet-600 flex items-center justify-center shadow-lg">
+        <i class="fa-solid fa-warehouse text-xl"></i>
+      </div>
+      <div>
+        <h1 class="text-lg md:text-xl font-extrabold">Warehouse <span class="text-blue-400">AI</span></h1>
+        <p class="text-xs text-slate-400">Intelligent Inventory System</p>
+      </div>
+    </a>
+
+    <a href="login.html" class="text-sm text-slate-200 hover:text-blue-300">
+      Sign in <i class="fa-solid fa-arrow-right ml-1"></i>
+    </a>
+  </header>
+
+  <main class="flex-1 flex items-center justify-center px-4 py-8">
+    <div class="w-full max-w-5xl grid md:grid-cols-2 gap-8 items-center">
+
+      <!-- Intro -->
+      <section class="hidden md:block px-3">
+        <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-violet-400/30 bg-violet-500/10 text-violet-200 text-sm mb-7">
+          <i class="fa-solid fa-sparkles"></i>
+          Get Started with AI
+        </div>
+
+        <h2 class="text-4xl lg:text-5xl font-extrabold leading-tight mb-6">
+          Build a Smarter<br>
+          <span class="gradient-text">Warehouse Future.</span>
+        </h2>
+
+        <p class="text-slate-300 leading-7 max-w-md mb-8">
+          Create your account to access AI-powered inventory detection, object counting and warehouse analysis.
+        </p>
+
+        <div class="space-y-4">
+          <div class="flex items-center gap-3 text-slate-200">
+            <i class="fa-solid fa-circle-check text-blue-400"></i>
+            Multi-image warehouse analysis
+          </div>
+          <div class="flex items-center gap-3 text-slate-200">
+            <i class="fa-solid fa-circle-check text-blue-400"></i>
+            Inventory results and history
+          </div>
+          <div class="flex items-center gap-3 text-slate-200">
+            <i class="fa-solid fa-circle-check text-blue-400"></i>
+            One organized workspace
+          </div>
+        </div>
+      </section>
+
+      <!-- Registration card -->
+      <section class="glass rounded-3xl p-6 sm:p-8 w-full max-w-md mx-auto">
+        <div class="text-center mb-6">
+          <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-blue-500 to-violet-600 flex items-center justify-center mx-auto mb-4 shadow-lg">
+            <i class="fa-solid fa-user-plus text-xl"></i>
+          </div>
+          <h2 class="text-2xl sm:text-3xl font-extrabold">
+            Create <span class="gradient-text">Account</span>
+          </h2>
+          <p class="text-slate-400 text-sm mt-2">Join your Warehouse AI workspace.</p>
+        </div>
+
+        <div id="message" class="hidden rounded-xl p-3 text-sm mb-4" role="status"></div>
+
+        <form id="registerForm" class="space-y-4">
+          <div>
+            <label for="fullName" class="block text-sm font-medium text-slate-200 mb-2">Full Name</label>
+            <div class="relative">
+              <i class="fa-regular fa-user auth-icon"></i>
+              <input id="fullName" class="field" type="text" placeholder="Enter your full name" autocomplete="name" minlength="2" maxlength="100" required>
+            </div>
+          </div>
+
+          <div>
+            <label for="email" class="block text-sm font-medium text-slate-200 mb-2">Email Address</label>
+            <div class="relative">
+              <i class="fa-regular fa-envelope auth-icon"></i>
+              <input id="email" class="field" type="email" placeholder="you@example.com" autocomplete="email" maxlength="254" required>
+            </div>
+          </div>
+
+          <div>
+            <label for="password" class="block text-sm font-medium text-slate-200 mb-2">Password</label>
+            <div class="relative">
+              <i class="fa-solid fa-lock auth-icon"></i>
+              <input id="password" class="field pr-12" type="password" placeholder="Minimum 8 characters" autocomplete="new-password" minlength="8" required>
+              <button id="togglePassword" type="button" class="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400" aria-label="Show password">
+                <i class="fa-regular fa-eye"></i>
+              </button>
+            </div>
+
+            <div class="strength-bar mt-3">
+              <div id="strengthFill" class="strength-fill"></div>
+            </div>
+            <p id="strengthText" class="text-xs text-slate-500 mt-2">Use 8+ characters with letters and numbers.</p>
+          </div>
+
+          <div>
+            <label for="confirmPassword" class="block text-sm font-medium text-slate-200 mb-2">Confirm Password</label>
+            <div class="relative">
+              <i class="fa-solid fa-shield-halved auth-icon"></i>
+              <input id="confirmPassword" class="field" type="password" placeholder="Re-enter your password" autocomplete="new-password" minlength="8" required>
+            </div>
+          </div>
+
+          <label class="flex items-start gap-3 text-xs text-slate-400 leading-5">
+            <input id="terms" type="checkbox" class="mt-1 accent-blue-500" required>
+            <span>I agree to use Warehouse AI responsibly and understand that account information will be handled according to the application's privacy policy.</span>
+          </label>
+
+          <button type="submit" id="registerButton" class="primary-btn w-full rounded-xl py-3.5 font-semibold">
+            Create Account <i class="fa-solid fa-arrow-right ml-2"></i>
+          </button>
+        </form>
+
+        <p class="text-center text-sm text-slate-400 mt-6">
+          Already have an account?
+          <a href="login.html" class="text-blue-300 font-semibold hover:text-blue-200">Sign In</a>
+        </p>
+
+        <p class="text-center text-xs text-slate-500 mt-6">
+          © 2026 Warehouse AI. All rights reserved.
+        </p>
+      </section>
+
+    </div>
+  </main>
+
+  <script>
+    const form = document.getElementById("registerForm");
+    const message = document.getElementById("message");
+    const passwordInput = document.getElementById("password");
+    const confirmInput = document.getElementById("confirmPassword");
+
+    function showMessage(text, success = false) {
+      message.textContent = text;
+      message.className = "rounded-xl p-3 text-sm mb-4 " +
+        (success
+          ? "bg-emerald-500/10 text-emerald-300 border border-emerald-500/30"
+          : "bg-red-500/10 text-red-300 border border-red-500/30");
+    }
+
+    document.getElementById("togglePassword").addEventListener("click", () => {
+      const icon = document.querySelector("#togglePassword i");
+      const visible = passwordInput.type === "password";
+
+      passwordInput.type = visible ? "text" : "password";
+      icon.className = visible ? "fa-regular fa-eye-slash" : "fa-regular fa-eye";
+    });
+
+    passwordInput.addEventListener("input", () => {
+      const password = passwordInput.value;
+      let score = 0;
+
+      if (password.length >= 8) score++;
+      if (/[A-Z]/.test(password)) score++;
+      if (/[a-z]/.test(password)) score++;
+      if (/[0-9]/.test(password)) score++;
+      if (/[^A-Za-z0-9]/.test(password)) score++;
+
+      const fill = document.getElementById("strengthFill");
+      const text = document.getElementById("strengthText");
+
+      fill.style.width = (score * 20) + "%";
+
+      if (!password) {
+        text.textContent = "Use 8+ characters with letters and numbers.";
+        fill.style.background = "#334155";
+      } else if (score <= 2) {
+        text.textContent = "Weak password";
+        fill.style.background = "#ef4444";
+      } else if (score <= 3) {
+        text.textContent = "Medium password";
+        fill.style.background = "#f59e0b";
+      } else {
+        text.textContent = "Strong password";
+        fill.style.background = "#22c55e";
+      }
+    });
+
+    confirmInput.addEventListener("input", () => {
+      confirmInput.setCustomValidity(
+        confirmInput.value && confirmInput.value !== passwordInput.value
+          ? "Passwords do not match."
+          : ""
+      );
+    });
+
+    passwordInput.addEventListener("input", () => {
+      confirmInput.setCustomValidity(
+        confirmInput.value && confirmInput.value !== passwordInput.value
+          ? "Passwords do not match."
+          : ""
+      );
+    });
+
+    form.addEventListener("submit", async event => {
+      event.preventDefault();
+
+      const fullName = document.getElementById("fullName").value.trim();
+      const email = document.getElementById("email").value.trim().toLowerCase();
+      const password = passwordInput.value;
+      const confirmPassword = confirmInput.value;
+
+      if (password.length < 8) {
+        showMessage("Password must contain at least 8 characters.");
+        return;
+      }
+
+      if (password !== confirmPassword) {
+        showMessage("Passwords do not match.");
+        return;
+      }
+
+      const button = document.getElementById("registerButton");
+      button.disabled = true;
+      button.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i> Creating Account...';
+
+      try {
+        const response = await fetch("http://127.0.0.1:8000/auth/register", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            full_name: fullName,
+            email,
+            password
+          })
+        });
+
+        const data = await response.json().catch(() => ({}));
+
+        if (!response.ok) {
+          showMessage(data.detail || "Registration failed. Please try again.");
+          return;
+        }
+
+        showMessage("Account created successfully! Redirecting to login...", true);
+
+        setTimeout(() => {
+          window.location.href = "login.html";
+        }, 1200);
+
+      } catch (error) {
+        showMessage("Backend connection failed. Start FastAPI and configure /auth/register first.");
+      } finally {
+        button.disabled = false;
+        button.innerHTML = 'Create Account <i class="fa-solid fa-arrow-right ml-2"></i>';
+      }
+    });
+  </script>
+</body>
+</html>
+```

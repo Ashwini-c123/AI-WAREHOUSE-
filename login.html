@@ -1,0 +1,282 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login | Warehouse AI</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+  <style>
+    * { font-family: Inter, sans-serif; }
+
+    body {
+      min-height: 100vh;
+      background:
+        linear-gradient(110deg, rgba(4,12,29,.93), rgba(9,24,54,.78), rgba(15,23,42,.72)),
+        url("https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=2000&q=85")
+        center/cover fixed no-repeat;
+    }
+
+    .glass {
+      background: rgba(10, 20, 43, .83);
+      border: 1px solid rgba(148, 163, 184, .25);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      box-shadow: 0 25px 80px rgba(0,0,0,.35);
+    }
+
+    .gradient-text {
+      background: linear-gradient(90deg,#60a5fa,#a78bfa);
+      -webkit-background-clip: text;
+      background-clip: text; 
+      -webkit-text-fill-color: transparent;
+    }
+
+    .field {
+      width: 100%;
+      background: rgba(15, 27, 52, .85);
+      border: 1px solid #334155;
+      border-radius: 12px;
+      padding: 13px 14px 13px 43px;
+      color: white;
+      outline: none;
+      transition: .2s;
+    }
+
+    .field:focus {
+      border-color: #60a5fa;
+      box-shadow: 0 0 0 3px rgba(59,130,246,.13);
+    }
+
+    .field::placeholder { color: #94a3b8; }
+
+    .primary-btn {
+      background: linear-gradient(100deg,#2563eb,#7c3aed);
+      box-shadow: 0 8px 25px rgba(37,99,235,.23);
+      transition: .2s;
+    }
+
+    .primary-btn:hover {
+      transform: translateY(-1px);
+      filter: brightness(1.1);
+    }
+
+    .auth-icon {
+      position: absolute;
+      left: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #93a4c4;
+    }
+
+    .notice {
+      background: rgba(15,23,42,.95);
+      border: 1px solid #334155;
+    }
+  </style>
+</head>
+
+<body class="text-white flex flex-col">
+
+  <!-- Navbar -->
+  <header class="flex items-center justify-between px-5 md:px-12 py-5">
+    <a href="login.html" class="flex items-center gap-3">
+      <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-blue-500 to-violet-600 flex items-center justify-center shadow-lg">
+        <i class="fa-solid fa-warehouse text-xl"></i>
+      </div>
+      <div>
+        <h1 class="text-lg md:text-xl font-extrabold">
+          Warehouse <span class="text-blue-400">AI</span>
+        </h1>
+        <p class="text-xs text-slate-400">Intelligent Inventory System</p>
+      </div>
+    </a>
+
+    <a href="register.html" class="text-sm text-slate-200 hover:text-blue-300">
+      Create account <i class="fa-solid fa-arrow-right ml-1"></i>
+    </a>
+  </header>
+
+  <!-- Login section -->
+  <main class="flex-1 flex items-center justify-center px-4 py-10">
+    <div class="w-full max-w-5xl grid md:grid-cols-2 gap-8 items-center">
+
+      <!-- Left content -->
+      <section class="hidden md:block px-3">
+        <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-blue-400/30 bg-blue-500/10 text-blue-200 text-sm mb-7">
+          <span class="w-2 h-2 bg-green-400 rounded-full"></span>
+          AI-Powered Warehouse Intelligence
+        </div>
+
+        <h2 class="text-4xl lg:text-5xl font-extrabold leading-tight mb-6">
+          Smarter Inventory.<br>
+          <span class="gradient-text">Better Decisions.</span>
+        </h2>
+
+        <p class="text-slate-300 leading-7 max-w-md mb-8">
+          Detect warehouse objects, count inventory and analyze multiple images with computer vision.
+        </p>
+
+        <div class="space-y-5">
+          <div class="flex gap-4 items-center">
+            <div class="w-11 h-11 rounded-xl bg-blue-500/20 flex items-center justify-center text-blue-300">
+              <i class="fa-solid fa-eye"></i>
+            </div>
+            <div>
+              <h3 class="font-semibold">AI Object Detection</h3>
+              <p class="text-sm text-slate-400 mt-1">Detect and classify warehouse items.</p>
+            </div>
+          </div>
+
+          <div class="flex gap-4 items-center">
+            <div class="w-11 h-11 rounded-xl bg-violet-500/20 flex items-center justify-center text-violet-300">
+              <i class="fa-solid fa-cubes-stacked"></i>
+            </div>
+            <div>
+              <h3 class="font-semibold">Intelligent Counting</h3>
+              <p class="text-sm text-slate-400 mt-1">Review detected and unique object counts.</p>
+            </div>
+          </div>
+
+          <div class="flex gap-4 items-center">
+            <div class="w-11 h-11 rounded-xl bg-emerald-500/20 flex items-center justify-center text-emerald-300">
+              <i class="fa-solid fa-chart-line"></i>
+            </div>
+            <div>
+              <h3 class="font-semibold">Analysis Dashboard</h3>
+              <p class="text-sm text-slate-400 mt-1">Access inventory results and scan history.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Login card -->
+      <section class="glass rounded-3xl p-6 sm:p-9 w-full max-w-md mx-auto">
+        <div class="text-center mb-7">
+          <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-blue-500 to-violet-600 flex items-center justify-center mx-auto mb-5 shadow-lg">
+            <i class="fa-solid fa-user-shield text-2xl"></i>
+          </div>
+
+          <h2 class="text-2xl sm:text-3xl font-extrabold">Welcome Back!</h2>
+          <p class="text-slate-400 text-sm mt-2">Sign in to your Warehouse AI workspace.</p>
+        </div>
+
+        <div id="message" class="hidden rounded-xl p-3 text-sm mb-4" role="status"></div>
+
+        <form id="loginForm" class="space-y-5">
+          <div>
+            <label for="email" class="block text-sm font-medium text-slate-200 mb-2">Email Address</label>
+            <div class="relative">
+              <i class="fa-regular fa-envelope auth-icon"></i>
+              <input id="email" class="field" type="email" placeholder="you@example.com" autocomplete="email" required>
+            </div>
+          </div>
+
+          <div>
+            <div class="flex items-center justify-between mb-2">
+              <label for="password" class="text-sm font-medium text-slate-200">Password</label>
+              <a href="#forgot" id="forgotLink" class="text-xs text-blue-300 hover:text-blue-200">Forgot password?</a>
+            </div>
+
+            <div class="relative">
+              <i class="fa-solid fa-lock auth-icon"></i>
+              <input id="password" class="field pr-12" type="password" placeholder="Enter your password" autocomplete="current-password" required>
+              <button type="button" id="togglePassword" class="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-white" aria-label="Show password">
+                <i class="fa-regular fa-eye"></i>
+              </button>
+            </div>
+          </div>
+
+          <label class="flex items-center gap-2 text-sm text-slate-300">
+            <input id="remember" type="checkbox" class="accent-blue-500">
+            Remember me on this device
+          </label>
+
+          <button type="submit" class="primary-btn w-full rounded-xl py-3.5 font-semibold">
+            Sign In <i class="fa-solid fa-arrow-right ml-2"></i>
+          </button>
+        </form>
+
+        <div class="flex items-center gap-3 my-6">
+          <div class="h-px flex-1 bg-slate-600/60"></div>
+          <span class="text-xs text-slate-500">NEW TO WAREHOUSE AI?</span>
+          <div class="h-px flex-1 bg-slate-600/60"></div>
+        </div>
+
+        <a href="register.html" class="block text-center w-full border border-slate-600 hover:border-blue-400 rounded-xl py-3 font-semibold text-sm transition">
+          <i class="fa-solid fa-user-plus mr-2 text-blue-300"></i>
+          Create a New Account
+        </a>
+
+        <p class="text-center text-xs text-slate-500 mt-7">
+          © 2026 Warehouse AI. All rights reserved.
+        </p>
+      </section>
+
+    </div>
+  </main>
+
+  <script>
+    const form = document.getElementById("loginForm");
+    const message = document.getElementById("message");
+
+    function showMessage(text, success = false) {
+      message.textContent = text;
+      message.className = "rounded-xl p-3 text-sm mb-4 " +
+        (success
+          ? "bg-emerald-500/10 text-emerald-300 border border-emerald-500/30"
+          : "bg-red-500/10 text-red-300 border border-red-500/30");
+    }
+
+    document.getElementById("togglePassword").addEventListener("click", () => {
+      const input = document.getElementById("password");
+      const icon = document.querySelector("#togglePassword i");
+      const visible = input.type === "password";
+
+      input.type = visible ? "text" : "password";
+      icon.className = visible ? "fa-regular fa-eye-slash" : "fa-regular fa-eye";
+    });
+
+    document.getElementById("forgotLink").addEventListener("click", event => {
+      event.preventDefault();
+      showMessage("Password reset requires a configured backend or email service.");
+    });
+
+    form.addEventListener("submit", async event => {
+      event.preventDefault();
+
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value;
+
+      // Real project: authenticate against FastAPI, not browser storage.
+      try {
+        const response = await fetch("http://127.0.0.1:8000/auth/login", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email, password })
+        });
+
+        const data = await response.json().catch(() => ({}));
+
+        if (!response.ok) {
+          showMessage(data.detail || "Login failed. Check your email and password.");
+          return;
+        }
+
+        if (data.access_token) {
+          sessionStorage.setItem("warehouseAccessToken", data.access_token);
+        }
+
+        window.location.href = "index.html";
+      } catch (error) {
+        showMessage("Backend connection failed. Start FastAPI and configure /auth/login first.");
+      }
+    });
+  </script>
+</body>
+</html>
+```

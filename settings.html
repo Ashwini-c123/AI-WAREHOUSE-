@@ -1,0 +1,243 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Warehouse AI | Settings</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    body{font-family:Inter,sans-serif;background:#080f25;color:#f8fafc}
+    .glass{background:rgba(19,34,67,.78);border:1px solid rgba(148,163,184,.15);backdrop-filter:blur(18px)}
+    .gradient{background:linear-gradient(135deg,#2563eb,#6366f1,#38bdf8)}
+    .nav{display:flex;align-items:center;gap:12px;padding:13px 15px;border-radius:12px;color:#a8b7d2;transition:.2s}
+    .nav:hover,.nav.active{background:linear-gradient(100deg,#2563eb55,#6366f122);color:white}
+    .settings-input{width:100%;background:#080f25;border:1px solid rgba(148,163,184,.2);border-radius:11px;padding:13px 14px;color:#f8fafc;font-size:13px;outline:none}
+    .settings-input:focus{border-color:#3b82f6}
+    .settings-input::placeholder{color:#64748b}
+    .field-label{display:block;font-size:13px;font-weight:600;color:#cbd5e1;margin-bottom:9px}
+    .toggle{appearance:none;width:42px;height:24px;background:#334155;border-radius:20px;position:relative;cursor:pointer;transition:.2s;flex-shrink:0}
+    .toggle:checked{background:#2563eb}
+    .toggle:before{content:"";position:absolute;width:18px;height:18px;left:3px;top:3px;border-radius:50%;background:white;transition:.2s}
+    .toggle:checked:before{transform:translateX(18px)}
+    .setting-row{display:flex;justify-content:space-between;align-items:center;gap:20px;padding:18px 0;border-bottom:1px solid rgba(148,163,184,.12)}
+    .setting-row:last-child{border-bottom:0}
+    .save-btn{background:linear-gradient(135deg,#2563eb,#6366f1);padding:12px 22px;border-radius:11px;font-size:13px;font-weight:700;color:white}
+    .reset-btn{padding:12px 22px;border:1px solid rgba(148,163,184,.25);border-radius:11px;font-size:13px;font-weight:600;color:#cbd5e1}
+    .save-btn:hover,.reset-btn:hover{opacity:.88}
+  </style>
+</head>
+<body>
+<div class="min-h-screen md:flex">
+
+  <aside class="md:w-64 bg-[#0b1530] border-r border-white/10 p-5 md:fixed md:inset-y-0 md:overflow-y-auto">
+    <a href="index.html" class="flex items-center gap-3 mb-10">
+      <div class="gradient w-12 h-12 rounded-2xl flex items-center justify-center"><i class="fa-solid fa-warehouse text-xl"></i></div>
+      <div><h1 class="font-extrabold text-lg">Warehouse AI</h1><p class="text-xs text-blue-300">Smart Inventory System</p></div>
+    </a>
+
+    <p class="text-xs text-slate-500 uppercase tracking-widest mb-3">Workspace</p>
+    <nav class="space-y-2">
+      <a class="nav" href="index.html"><i class="fa-solid fa-house w-5"></i> Dashboard</a>
+      <a class="nav" href="upload.html"><i class="fa-solid fa-cloud-arrow-up w-5"></i> Upload Images</a>
+      <a class="nav" href="analysis.html"><i class="fa-solid fa-microchip w-5"></i> AI Analysis</a>
+      <a class="nav" href="index.html#features"><i class="fa-solid fa-cubes w-5"></i> Features</a>
+      <a class="nav" href="history.html"><i class="fa-solid fa-clock-rotate-left w-5"></i> Scan History</a>
+      <a class="nav active" href="settings.html"><i class="fa-solid fa-gear w-5"></i> Settings</a>
+    </nav>
+
+    <div class="glass rounded-2xl p-4 mt-10">
+      <div class="flex items-center gap-2 text-sm font-semibold"><span class="w-2 h-2 rounded-full bg-emerald-400"></span> AI Workspace</div>
+      <p class="text-xs text-slate-400 mt-2 leading-5">Customize your workspace and application preferences.</p>
+    </div>
+  </aside>
+
+  <main class="flex-1 md:ml-64 min-w-0">
+    <header class="px-5 md:px-10 py-6 border-b border-white/10 flex justify-between items-center">
+      <div>
+        <p class="text-xs text-blue-300">WORKSPACE / PREFERENCES</p>
+        <h2 class="text-2xl font-bold mt-1">Settings</h2>
+      </div>
+      <div class="w-11 h-11 rounded-xl glass flex items-center justify-center text-blue-300">
+        <i class="fa-solid fa-sliders text-lg"></i>
+      </div>
+    </header>
+
+    <div class="p-5 md:p-10 max-w-5xl mx-auto">
+
+      <section class="relative overflow-hidden rounded-3xl p-7 md:p-9 mb-8 gradient">
+        <div class="absolute -right-10 -top-16 w-64 h-64 rounded-full border-[30px] border-white/10"></div>
+        <div class="relative">
+          <span class="text-xs font-bold bg-white/15 border border-white/20 rounded-full px-3 py-2">
+            <i class="fa-solid fa-gear mr-2"></i>WORKSPACE CONFIGURATION
+          </span>
+          <h1 class="text-3xl md:text-4xl font-extrabold mt-5">Personalize Your Workspace</h1>
+          <p class="text-blue-50/90 mt-3 text-sm leading-6 max-w-xl">Manage your workspace information, notification preferences and dashboard behavior.</p>
+        </div>
+      </section>
+
+      <form id="settingsForm">
+
+        <section class="glass rounded-2xl p-6 md:p-8 mb-6">
+          <div class="flex items-center gap-3 mb-2">
+            <div class="w-11 h-11 rounded-xl bg-blue-500/15 text-blue-400 flex items-center justify-center"><i class="fa-solid fa-building"></i></div>
+            <div><h2 class="text-lg font-bold">Workspace Profile</h2><p class="text-xs text-slate-400 mt-1">Basic information about your workspace</p></div>
+          </div>
+
+          <div class="grid md:grid-cols-2 gap-5 mt-7">
+            <div>
+              <label class="field-label" for="workspaceName">Workspace Name</label>
+              <input class="settings-input" id="workspaceName" name="workspaceName" placeholder="Enter workspace name">
+            </div>
+            <div>
+              <label class="field-label" for="contactEmail">Contact Email</label>
+              <input class="settings-input" id="contactEmail" name="contactEmail" type="email" placeholder="Enter contact email">
+            </div>
+            <div>
+              <label class="field-label" for="warehouseType">Warehouse Type</label>
+              <select class="settings-input" id="warehouseType" name="warehouseType">
+                <option value="">Select warehouse type</option>
+                <option>Retail Warehouse</option>
+                <option>Food Storage</option>
+                <option>Manufacturing</option>
+                <option>General Inventory</option>
+                <option>Other</option>
+              </select>
+            </div>
+            <div>
+              <label class="field-label" for="timezone">Time Zone</label>
+              <select class="settings-input" id="timezone" name="timezone">
+                <option value="Asia/Kolkata">India Standard Time (IST)</option>
+                <option value="UTC">UTC</option>
+                <option value="Europe/London">London</option>
+                <option value="America/New_York">New York</option>
+              </select>
+            </div>
+          </div>
+        </section>
+
+        <section class="glass rounded-2xl p-6 md:p-8 mb-6">
+          <div class="flex items-center gap-3 mb-2">
+            <div class="w-11 h-11 rounded-xl bg-violet-500/15 text-violet-300 flex items-center justify-center"><i class="fa-solid fa-bell"></i></div>
+            <div><h2 class="text-lg font-bold">Notifications</h2><p class="text-xs text-slate-400 mt-1">Choose which alerts to enable</p></div>
+          </div>
+
+          <div class="mt-5">
+            <div class="setting-row">
+              <div><h3 class="text-sm font-semibold">Low Stock Alerts</h3><p class="text-xs text-slate-400 mt-1">Alerts for inventory items below their stock limit.</p></div>
+              <input class="toggle" type="checkbox" name="lowStock" checked aria-label="Low stock alerts">
+            </div>
+            <div class="setting-row">
+              <div><h3 class="text-sm font-semibold">Expiry Notifications</h3><p class="text-xs text-slate-400 mt-1">Alerts for products nearing their expiry date.</p></div>
+              <input class="toggle" type="checkbox" name="expiryAlerts" checked aria-label="Expiry notifications">
+            </div>
+            <div class="setting-row">
+              <div><h3 class="text-sm font-semibold">Analysis Completion</h3><p class="text-xs text-slate-400 mt-1">Notify when an image analysis is completed.</p></div>
+              <input class="toggle" type="checkbox" name="analysisAlerts" checked aria-label="Analysis completion alerts">
+            </div>
+          </div>
+        </section>
+
+        <section class="glass rounded-2xl p-6 md:p-8 mb-6">
+          <div class="flex items-center gap-3 mb-2">
+            <div class="w-11 h-11 rounded-xl bg-cyan-500/15 text-cyan-300 flex items-center justify-center"><i class="fa-solid fa-display"></i></div>
+            <div><h2 class="text-lg font-bold">Display Preferences</h2><p class="text-xs text-slate-400 mt-1">Adjust your default dashboard experience</p></div>
+          </div>
+
+          <div class="grid md:grid-cols-2 gap-5 mt-7">
+            <div>
+              <label class="field-label" for="defaultPage">Default Page</label>
+              <select class="settings-input" id="defaultPage" name="defaultPage">
+                <option value="index.html">Dashboard</option>
+                <option value="upload.html">Upload Images</option>
+                <option value="analysis.html">AI Analysis</option>
+                <option value="history.html">Scan History</option>
+              </select>
+            </div>
+            <div>
+              <label class="field-label" for="tableDensity">Table Display</label>
+              <select class="settings-input" id="tableDensity" name="tableDensity">
+                <option value="comfortable">Comfortable</option>
+                <option value="compact">Compact</option>
+              </select>
+            </div>
+          </div>
+        </section>
+
+        <div class="flex flex-wrap items-center gap-3">
+          <button type="submit" class="save-btn"><i class="fa-solid fa-floppy-disk mr-2"></i>Save Settings</button>
+          <button type="button" id="resetBtn" class="reset-btn"><i class="fa-solid fa-rotate-left mr-2"></i>Reset</button>
+        </div>
+
+        <p id="saveMessage" class="text-sm text-emerald-300 mt-4" role="status" aria-live="polite"></p>
+      </form>
+
+      <section class="glass rounded-2xl p-6 mt-8">
+        <div class="flex items-start gap-4">
+          <div class="w-10 h-10 rounded-xl bg-blue-500/15 text-blue-400 flex items-center justify-center shrink-0"><i class="fa-solid fa-shield-halved"></i></div>
+          <div>
+            <h3 class="font-bold">Local Data & Privacy</h3>
+            <p class="text-sm text-slate-400 mt-2 leading-6">These preferences are stored in this browser only. They are not synchronized to a server or shared between different devices.</p>
+          </div>
+        </div>
+      </section>
+
+      <footer class="text-center text-xs text-slate-600 py-8">Warehouse AI · Intelligent Inventory Detection System</footer>
+    </div>
+  </main>
+</div>
+
+<script>
+  const form = document.getElementById("settingsForm");
+  const message = document.getElementById("saveMessage");
+  const storageKey = "warehouseAISettings";
+
+  function loadSettings() {
+    try {
+      const saved = JSON.parse(localStorage.getItem(storageKey) || "null");
+      if (!saved) return;
+
+      Object.entries(saved).forEach(([name, value]) => {
+        const field = form.elements.namedItem(name);
+        if (!field) return;
+
+        if (field.type === "checkbox") {
+          field.checked = Boolean(value);
+        } else {
+          field.value = value;
+        }
+      });
+    } catch (error) {
+      message.textContent = "Unable to load saved preferences.";
+    }
+  }
+
+  form.addEventListener("submit", function(event) {
+    event.preventDefault();
+    const data = {};
+
+    for (const field of form.elements) {
+      if (!field.name) continue;
+      data[field.name] = field.type === "checkbox" ? field.checked : field.value;
+    }
+
+    try {
+      localStorage.setItem(storageKey, JSON.stringify(data));
+      message.textContent = "Settings saved successfully on this browser.";
+    } catch (error) {
+      message.textContent = "Unable to save settings. Please check browser storage.";
+    }
+  });
+
+  document.getElementById("resetBtn").addEventListener("click", function() {
+    form.reset();
+    localStorage.removeItem(storageKey);
+    message.textContent = "Preferences reset to their default values.";
+  });
+
+  loadSettings();
+</script>
+</body>
+</html>

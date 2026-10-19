@@ -1,0 +1,227 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Warehouse AI | Scan History</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    body{font-family:Inter,sans-serif;background:#080f25;color:#f8fafc}
+    .glass{background:rgba(19,34,67,.78);border:1px solid rgba(148,163,184,.15);backdrop-filter:blur(18px)}
+    .gradient{background:linear-gradient(135deg,#2563eb,#6366f1,#38bdf8)}
+    .nav{display:flex;align-items:center;gap:12px;padding:13px 15px;border-radius:12px;color:#a8b7d2;transition:.2s}
+    .nav:hover,.nav.active{background:linear-gradient(100deg,#2563eb55,#6366f122);color:white}
+    .history-table{width:100%;border-collapse:collapse;min-width:650px;text-align:left}
+    .history-table th,.history-table td{padding:17px 16px;border-bottom:1px solid rgba(148,163,184,.13)}
+    .history-table th{font-size:11px;color:#94a3b8;text-transform:uppercase;letter-spacing:1px}
+    .history-table td{font-size:13px;color:#dbeafe}
+    .status{display:inline-flex;align-items:center;gap:7px;padding:6px 10px;border-radius:20px;font-size:11px;font-weight:700;background:#10b98118;color:#6ee7b7;border:1px solid #10b98130}
+    .status-dot{width:6px;height:6px;border-radius:50%;background:#34d399}
+    .action-btn{padding:9px 12px;border:1px solid #334155;border-radius:9px;color:#cbd5e1;font-size:12px}
+    .action-btn:hover{background:#1e3a8a;color:white}
+    input,select{outline:none}
+    input:focus,select:focus{border-color:#3b82f6!important}
+  </style>
+</head>
+<body>
+<div class="min-h-screen md:flex">
+
+  <aside class="md:w-64 bg-[#0b1530] border-r border-white/10 p-5 md:fixed md:inset-y-0 md:overflow-y-auto">
+    <a href="index.html" class="flex items-center gap-3 mb-10">
+      <div class="gradient w-12 h-12 rounded-2xl flex items-center justify-center"><i class="fa-solid fa-warehouse text-xl"></i></div>
+      <div><h1 class="font-extrabold text-lg">Warehouse AI</h1><p class="text-xs text-blue-300">Smart Inventory System</p></div>
+    </a>
+
+    <p class="text-xs text-slate-500 uppercase tracking-widest mb-3">Workspace</p>
+    <nav class="space-y-2">
+      <a class="nav" href="index.html"><i class="fa-solid fa-house w-5"></i> Dashboard</a>
+      <a class="nav" href="upload.html"><i class="fa-solid fa-cloud-arrow-up w-5"></i> Upload Images</a>
+      <a class="nav" href="analysis.html"><i class="fa-solid fa-microchip w-5"></i> AI Analysis</a>
+      <a class="nav" href="index.html#features"><i class="fa-solid fa-cubes w-5"></i> Features</a>
+      <a class="nav active" href="history.html"><i class="fa-solid fa-clock-rotate-left w-5"></i> Scan History</a>
+      <a class="nav" href="settings.html"><i class="fa-solid fa-gear w-5"></i> Settings</a>
+    </nav>
+
+    <div class="glass rounded-2xl p-4 mt-10">
+      <div class="flex items-center gap-2 text-sm font-semibold"><span class="w-2 h-2 rounded-full bg-emerald-400"></span> AI Workspace</div>
+      <p class="text-xs text-slate-400 mt-2 leading-5">Review your previous warehouse analysis sessions.</p>
+    </div>
+  </aside>
+
+  <main class="flex-1 md:ml-64 min-w-0">
+    <header class="px-5 md:px-10 py-6 border-b border-white/10 flex justify-between items-center gap-4">
+      <div>
+        <p class="text-xs text-blue-300">WORKSPACE / ACTIVITY</p>
+        <h2 class="text-2xl font-bold mt-1">Scan History</h2>
+      </div>
+      <a href="upload.html" class="gradient px-4 py-3 rounded-xl text-sm font-bold whitespace-nowrap">
+        <i class="fa-solid fa-plus mr-2"></i>New Scan
+      </a>
+    </header>
+
+    <div class="p-5 md:p-10 max-w-7xl mx-auto">
+
+      <section class="relative overflow-hidden rounded-3xl p-7 md:p-9 mb-8 gradient">
+        <div class="absolute -right-10 -top-16 w-64 h-64 rounded-full border-[30px] border-white/10"></div>
+        <div class="relative">
+          <span class="text-xs font-bold bg-white/15 border border-white/20 rounded-full px-3 py-2">
+            <i class="fa-solid fa-clock-rotate-left mr-2"></i>ACTIVITY LOG
+          </span>
+          <h1 class="text-3xl md:text-4xl font-extrabold mt-5">Your Analysis History</h1>
+          <p class="text-blue-50/90 mt-3 max-w-2xl text-sm leading-6">Track uploaded images, review completed analysis sessions and access your warehouse activity in one place.</p>
+        </div>
+      </section>
+
+      <section class="grid sm:grid-cols-2 xl:grid-cols-3 gap-4 mb-8">
+        <div class="glass p-5 rounded-2xl">
+          <div class="flex justify-between items-center">
+            <span class="text-sm text-slate-400">Total Analyses</span>
+            <span class="w-10 h-10 rounded-xl bg-blue-500/15 text-blue-400 flex items-center justify-center"><i class="fa-solid fa-chart-line"></i></span>
+          </div>
+          <p id="totalAnalyses" class="text-3xl font-extrabold mt-5">0</p>
+          <p class="text-xs text-slate-500 mt-2">Saved analysis sessions</p>
+        </div>
+
+        <div class="glass p-5 rounded-2xl">
+          <div class="flex justify-between items-center">
+            <span class="text-sm text-slate-400">Images Uploaded</span>
+            <span class="w-10 h-10 rounded-xl bg-cyan-500/15 text-cyan-300 flex items-center justify-center"><i class="fa-regular fa-images"></i></span>
+          </div>
+          <p id="totalImages" class="text-3xl font-extrabold mt-5">0</p>
+          <p class="text-xs text-slate-500 mt-2">Across saved sessions</p>
+        </div>
+
+        <div class="glass p-5 rounded-2xl">
+          <div class="flex justify-between items-center">
+            <span class="text-sm text-slate-400">Objects Detected</span>
+            <span class="w-10 h-10 rounded-xl bg-violet-500/15 text-violet-300 flex items-center justify-center"><i class="fa-solid fa-cubes"></i></span>
+          </div>
+          <p id="totalObjects" class="text-3xl font-extrabold mt-5">0</p>
+          <p class="text-xs text-slate-500 mt-2">Reported by saved sessions</p>
+        </div>
+      </section>
+
+      <section class="glass rounded-2xl p-5 md:p-7">
+        <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 mb-6">
+          <div>
+            <h2 class="text-lg font-bold">Previous Sessions</h2>
+            <p class="text-sm text-slate-400 mt-1">Search and filter your saved scans.</p>
+          </div>
+          <div class="flex flex-col sm:flex-row gap-3">
+            <input id="searchHistory" type="search" placeholder="Search sessions..."
+              class="bg-[#080f25] border border-white/10 rounded-xl px-4 py-3 text-sm text-white">
+            <select id="filterHistory" class="bg-[#080f25] border border-white/10 rounded-xl px-4 py-3 text-sm text-white">
+              <option value="all">All sessions</option>
+              <option value="completed">Completed</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="overflow-x-auto">
+          <table class="history-table">
+            <thead>
+              <tr>
+                <th>Session</th>
+                <th>Date</th>
+                <th>Images</th>
+                <th>Objects</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody id="historyBody"></tbody>
+          </table>
+        </div>
+
+        <div id="emptyState" class="hidden text-center py-14">
+          <div class="w-16 h-16 rounded-2xl bg-blue-500/10 text-blue-400 flex items-center justify-center mx-auto mb-4 text-2xl">
+            <i class="fa-regular fa-folder-open"></i>
+          </div>
+          <h3 class="font-bold">No scan history found</h3>
+          <p class="text-sm text-slate-400 mt-2">Upload images to begin a new analysis.</p>
+          <a href="upload.html" class="inline-block gradient rounded-xl px-5 py-3 mt-5 text-sm font-bold">Upload Images</a>
+        </div>
+
+        <p class="text-xs text-slate-500 mt-5"><i class="fa-solid fa-circle-info mr-1"></i> History is read from this browser's local storage. Only saved sessions will appear.</p>
+      </section>
+
+      <footer class="text-center text-xs text-slate-600 py-8">Warehouse AI · Intelligent Inventory Detection System</footer>
+    </div>
+  </main>
+</div>
+
+<script>
+  const historyBody = document.getElementById("historyBody");
+  const emptyState = document.getElementById("emptyState");
+
+  function getHistory() {
+    try {
+      const data = JSON.parse(localStorage.getItem("warehouseHistory") || "[]");
+      return Array.isArray(data) ? data : [];
+    } catch {
+      return [];
+    }
+  }
+
+  function renderHistory() {
+    const history = getHistory();
+    const query = document.getElementById("searchHistory").value.toLowerCase().trim();
+    const filter = document.getElementById("filterHistory").value;
+
+    document.getElementById("totalAnalyses").textContent = history.length;
+    document.getElementById("totalImages").textContent =
+      history.reduce((sum, item) => sum + (Number(item.imageCount) || 0), 0);
+    document.getElementById("totalObjects").textContent =
+      history.reduce((sum, item) => sum + (Number(item.totalObjects) || 0), 0);
+
+    const filtered = history.filter(item => {
+      const name = String(item.name || item.sessionName || item.title || "Warehouse Analysis");
+      const matchesSearch = name.toLowerCase().includes(query);
+      const status = String(item.status || "completed").toLowerCase();
+      const matchesFilter = filter === "all" || status === "completed" || status === "success";
+      return matchesSearch && matchesFilter;
+    });
+
+    historyBody.innerHTML = "";
+
+    filtered.forEach((item, index) => {
+      const row = document.createElement("tr");
+      const name = String(item.name || item.sessionName || item.title || `Analysis ${index + 1}`);
+      const dateValue = item.date || item.timestamp || item.createdAt;
+      let date = "Date unavailable";
+
+      if (dateValue) {
+        const parsed = new Date(dateValue);
+        if (!isNaN(parsed.getTime())) {
+          date = parsed.toLocaleDateString("en-IN", {
+            day: "2-digit", month: "short", year: "numeric"
+          });
+        }
+      }
+
+      const images = Number(item.imageCount) || 0;
+      const objects = Number(item.totalObjects) || 0;
+
+      [name, date, images, objects].forEach(value => {
+        const cell = document.createElement("td");
+        cell.textContent = value;
+        row.appendChild(cell);
+      });
+
+      const statusCell = document.createElement("td");
+      statusCell.innerHTML = '<span class="status"><span class="status-dot"></span>Completed</span>';
+      row.appendChild(statusCell);
+      historyBody.appendChild(row);
+    });
+
+    emptyState.classList.toggle("hidden", filtered.length > 0);
+  }
+
+  document.getElementById("searchHistory").addEventListener("input", renderHistory);
+  document.getElementById("filterHistory").addEventListener("change", renderHistory);
+  renderHistory();
+</script>
+</body>
+</html>

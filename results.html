@@ -1,0 +1,252 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Analysis Results | Warehouse AI</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+body{font-family:Inter,sans-serif;background:#080f25;color:#f8fafc}
+.glass{background:rgba(19,34,67,.78);border:1px solid rgba(148,163,184,.15);backdrop-filter:blur(18px)}
+.gradient{background:linear-gradient(135deg,#2563eb,#6366f1,#38bdf8)}
+.nav{display:flex;align-items:center;gap:12px;padding:13px 15px;border-radius:12px;color:#a8b7d2;transition:.2s}
+.nav:hover,.nav.active{background:linear-gradient(100deg,#2563eb55,#6366f122);color:white}
+</style>
+</head>
+<body>
+<div class="min-h-screen md:flex">
+
+<!-- SIDEBAR -->
+<aside class="md:w-64 bg-[#0b1530] border-r border-white/10 p-5 md:fixed md:inset-y-0">
+<a href="index.html" class="flex items-center gap-3 mb-10">
+<div class="gradient w-12 h-12 rounded-2xl flex items-center justify-center"><i class="fa-solid fa-warehouse text-xl"></i></div>
+<div><h1 class="font-extrabold text-lg">Warehouse AI</h1><p class="text-xs text-blue-300">Smart Inventory System</p></div>
+</a>
+<p class="text-xs text-slate-500 uppercase tracking-widest mb-3">Workspace</p>
+<nav class="space-y-2">
+<a class="nav" href="index.html"><i class="fa-solid fa-house w-5"></i> Dashboard</a>
+<a class="nav" href="upload.html"><i class="fa-solid fa-cloud-arrow-up w-5"></i> Upload Images</a>
+<a class="nav" href="analysis.html"><i class="fa-solid fa-microchip w-5"></i> AI Analysis</a>
+<a class="nav active" href="results.html"><i class="fa-solid fa-chart-column w-5"></i> Results</a>
+<a class="nav" href="history.html"><i class="fa-solid fa-clock-rotate-left w-5"></i> History</a>
+</nav>
+<div class="glass rounded-2xl p-4 mt-10">
+<i class="fa-solid fa-chart-pie text-blue-400 text-xl"></i>
+<p class="font-semibold text-sm mt-3">Inventory Report</p>
+<p class="text-xs text-slate-400 mt-2 leading-5">View the results returned by your computer vision model.</p>
+</div>
+</aside>
+
+<!-- MAIN -->
+<main class="flex-1 md:ml-64 min-w-0">
+<header class="px-5 md:px-10 py-6 border-b border-white/10 flex justify-between items-center gap-4">
+<div><p class="text-xs text-blue-300">WORKSPACE / RESULTS</p><h2 class="text-2xl font-bold mt-1">Analysis Results</h2></div>
+<a href="analysis.html" class="border border-white/10 rounded-xl px-4 py-3 text-sm hover:bg-white/5"><i class="fa-solid fa-arrow-left mr-2"></i>Analysis</a>
+</header>
+
+<div class="p-5 md:p-10 max-w-7xl mx-auto">
+
+<!-- TITLE -->
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
+<div>
+<span id="status" class="inline-flex items-center gap-2 bg-blue-500/15 text-blue-300 border border-blue-400/20 px-3 py-2 rounded-full text-xs font-bold"><i class="fa-solid fa-chart-simple"></i> INVENTORY REPORT</span>
+<h1 class="text-3xl md:text-4xl font-extrabold mt-5">Your Warehouse Insights</h1>
+<p class="text-slate-400 mt-3">Review detected objects, counts and model confidence.</p>
+</div>
+<button onclick="window.print()" class="border border-white/10 rounded-xl px-5 py-3 text-sm font-semibold hover:bg-white/5"><i class="fa-solid fa-print mr-2"></i>Print Report</button>
+</div>
+
+<!-- EMPTY STATE -->
+<div id="emptyState" class="glass rounded-3xl p-10 md:p-16 text-center mb-7">
+<div class="gradient w-16 h-16 rounded-2xl flex items-center justify-center mx-auto"><i class="fa-solid fa-chart-pie text-2xl"></i></div>
+<h2 class="text-2xl font-bold mt-5">No Analysis Results Yet</h2>
+<p class="text-slate-400 mt-3 max-w-md mx-auto leading-6">Run AI analysis first. Your detection results will appear here after the backend returns them.</p>
+<a href="upload.html" class="inline-block gradient rounded-xl px-6 py-3.5 font-bold mt-6">Upload Images <i class="fa-solid fa-arrow-right ml-2"></i></a>
+</div>
+
+<!-- RESULTS CONTENT -->
+<div id="resultsContent" class="hidden">
+
+<div class="grid sm:grid-cols-2 xl:grid-cols-4 gap-4 mb-7">
+<div class="glass p-5 rounded-2xl">
+<div class="flex justify-between items-center"><span class="text-sm text-slate-400">Total Detections</span><span class="w-10 h-10 rounded-xl bg-blue-500/15 text-blue-300 flex items-center justify-center"><i class="fa-solid fa-cubes"></i></span></div>
+<p id="totalObjects" class="text-3xl font-extrabold mt-5">0</p><p class="text-xs text-slate-500 mt-2">All detections across images</p>
+</div>
+<div class="glass p-5 rounded-2xl">
+<div class="flex justify-between items-center"><span class="text-sm text-slate-400">Unique Objects</span><span class="w-10 h-10 rounded-xl bg-violet-500/15 text-violet-300 flex items-center justify-center"><i class="fa-solid fa-boxes-stacked"></i></span></div>
+<p id="uniqueObjects" class="text-3xl font-extrabold mt-5">--</p><p class="text-xs text-slate-500 mt-2">Cross-view matching required</p>
+</div>
+<div class="glass p-5 rounded-2xl">
+<div class="flex justify-between items-center"><span class="text-sm text-slate-400">Images Analyzed</span><span class="w-10 h-10 rounded-xl bg-cyan-500/15 text-cyan-300 flex items-center justify-center"><i class="fa-regular fa-images"></i></span></div>
+<p id="totalImages" class="text-3xl font-extrabold mt-5">0</p><p class="text-xs text-slate-500 mt-2">Submitted photos</p>
+</div>
+<div class="glass p-5 rounded-2xl">
+<div class="flex justify-between items-center"><span class="text-sm text-slate-400">Mean Confidence</span><span class="w-10 h-10 rounded-xl bg-emerald-500/15 text-emerald-300 flex items-center justify-center"><i class="fa-solid fa-bullseye"></i></span></div>
+<p id="meanConfidence" class="text-3xl font-extrabold mt-5">--</p><p class="text-xs text-slate-500 mt-2">From returned detections</p>
+</div>
+</div>
+
+<!-- CATEGORY TABLE -->
+<section class="glass rounded-3xl p-5 md:p-7 mb-7">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
+<div><h2 class="text-xl font-bold">Category-wise Inventory</h2><p class="text-sm text-slate-400 mt-1">Count of objects by detected class</p></div>
+<span class="text-xs text-blue-300 bg-blue-500/10 px-3 py-2 rounded-lg">AI SUMMARY</span>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left text-sm">
+<thead><tr class="text-slate-400 border-b border-white/10"><th class="py-4 pr-4 font-medium">Object Category</th><th class="py-4 px-4 font-medium">Count</th><th class="py-4 px-4 font-medium">Share</th></tr></thead>
+<tbody id="categoryRows"><tr><td colspan="3" class="py-8 text-center text-slate-500">No category data available.</td></tr></tbody>
+</table>
+</div>
+</section>
+
+<!-- IMAGE RESULTS -->
+<section class="glass rounded-3xl p-5 md:p-7 mb-7">
+<div class="mb-6"><h2 class="text-xl font-bold">Detection Images</h2><p class="text-sm text-slate-400 mt-1">Images and bounding-box results returned by the backend</p></div>
+<div id="detectionImages" class="grid sm:grid-cols-2 xl:grid-cols-3 gap-5">
+<p class="text-sm text-slate-500">No processed image URLs returned.</p>
+</div>
+</section>
+
+<!-- CONFIDENCE DETAILS -->
+<section class="glass rounded-3xl p-5 md:p-7">
+<h2 class="text-xl font-bold">Detection Details</h2>
+<p class="text-sm text-slate-400 mt-1 mb-5">Individual detections and confidence scores</p>
+<div class="overflow-x-auto">
+<table class="w-full text-left text-sm">
+<thead><tr class="text-slate-400 border-b border-white/10"><th class="py-4 pr-4">Object</th><th class="py-4 px-4">Confidence</th><th class="py-4 px-4">Image</th></tr></thead>
+<tbody id="detectionRows"><tr><td colspan="3" class="py-6 text-center text-slate-500">No individual detections returned.</td></tr></tbody>
+</table>
+</div>
+</section>
+</div>
+
+<div class="mt-7 flex flex-col sm:flex-row gap-3">
+<a href="upload.html" class="gradient rounded-xl px-6 py-3.5 text-center font-bold"><i class="fa-solid fa-plus mr-2"></i>New Analysis</a>
+<a href="analysis.html" class="border border-white/10 rounded-xl px-6 py-3.5 text-center font-bold hover:bg-white/5">Back to Analysis</a>
+</div>
+
+<footer class="text-center text-xs text-slate-600 py-8">Warehouse AI · Intelligent Inventory Detection System</footer>
+</div>
+</main>
+</div>
+
+<script>
+function readResults(){
+ try{
+  const raw=sessionStorage.getItem("warehouseAnalysisResults");
+  return raw ? JSON.parse(raw) : null;
+ }catch(e){return null;}
+}
+
+function makeCell(text,classes=""){
+ const el=document.createElement("td");
+ el.className=classes;
+ el.textContent=text;
+ return el;
+}
+
+function renderResults(data){
+ if(!data || typeof data!=="object")return;
+
+ document.getElementById("emptyState").classList.add("hidden");
+ document.getElementById("resultsContent").classList.remove("hidden");
+
+ const detections=Array.isArray(data.detections)?data.detections:[];
+ const total=data.total_objects ?? detections.length;
+ document.getElementById("totalObjects").textContent=total;
+ document.getElementById("uniqueObjects").textContent=data.unique_objects ?? "--";
+ document.getElementById("totalImages").textContent=data.image_count ?? data.images_processed ?? "--";
+
+ let confidenceValues=detections
+  .map(d=>Number(d.confidence))
+  .filter(n=>Number.isFinite(n));
+
+ if(confidenceValues.length){
+  const mean=confidenceValues.reduce((a,b)=>a+b,0)/confidenceValues.length;
+  document.getElementById("meanConfidence").textContent=(mean<=1?mean*100:mean).toFixed(1)+"%";
+ }else{
+  document.getElementById("meanConfidence").textContent="--";
+ }
+
+ const counts=data.class_counts||{};
+ const entries=Object.entries(counts);
+ const totalClasses=entries.reduce((sum,item)=>sum+Number(item[1]||0),0);
+ const rows=document.getElementById("categoryRows");
+ rows.innerHTML="";
+
+ if(!entries.length){
+  rows.append(makeCell("No category counts returned.","py-6 text-slate-500"));
+ }else{
+  entries.forEach(([name,count])=>{
+   const tr=document.createElement("tr");
+   tr.className="border-b border-white/5";
+   const share=totalClasses?(Number(count)/totalClasses*100).toFixed(1)+"%":"--";
+   tr.append(
+    makeCell(name,"py-4 pr-4 font-semibold"),
+    makeCell(String(count),"py-4 px-4 text-blue-300 font-bold"),
+    makeCell(share,"py-4 px-4 text-slate-400")
+   );
+   rows.append(tr);
+  });
+ }
+
+ const detailRows=document.getElementById("detectionRows");
+ detailRows.innerHTML="";
+ if(!detections.length){
+  const tr=document.createElement("tr");
+  tr.append(makeCell("No individual detections returned.","py-6 text-slate-500"));
+  detailRows.append(tr);
+ }else{
+  detections.forEach(d=>{
+   const tr=document.createElement("tr");
+   tr.className="border-b border-white/5";
+   let confidence="--";
+   if(Number.isFinite(Number(d.confidence))){
+    const n=Number(d.confidence);
+    confidence=(n<=1?n*100:n).toFixed(1)+"%";
+   }
+   tr.append(
+    makeCell(String(d.class_name ?? d.label ?? d.class ?? "Unknown"),"py-4 pr-4 font-semibold"),
+    makeCell(confidence,"py-4 px-4 text-blue-300"),
+    makeCell(String(d.image_name ?? d.image ?? "—"),"py-4 px-4 text-slate-400")
+   );
+   detailRows.append(tr);
+  });
+ }
+
+ const imageList=Array.isArray(data.results)?data.results:[];
+ const imagesBox=document.getElementById("detectionImages");
+ imagesBox.innerHTML="";
+ const usable=imageList.filter(item=>item && (item.image_url || item.annotated_image_url));
+
+ if(!usable.length){
+  const p=document.createElement("p");
+  p.className="text-sm text-slate-500";
+  p.textContent="Backend has not returned annotated image URLs yet.";
+  imagesBox.append(p);
+ }else{
+  usable.forEach(item=>{
+   const card=document.createElement("div");
+   card.className="rounded-2xl overflow-hidden border border-white/10 bg-[#101b35]";
+   const img=document.createElement("img");
+   img.src=item.annotated_image_url || item.image_url;
+   img.alt=item.image_name || "Detected warehouse objects";
+   img.className="w-full h-52 object-cover";
+   img.onerror=()=>{img.alt="Image unavailable";img.removeAttribute("src");img.className="w-full h-52 bg-slate-900";};
+   const caption=document.createElement("p");
+   caption.className="p-4 text-sm font-semibold";
+   caption.textContent=item.image_name || "Analyzed image";
+   card.append(img,caption);
+   imagesBox.append(card);
+  });
+ }
+}
+
+renderResults(readResults());
+</script>
+</body>
+</html>
